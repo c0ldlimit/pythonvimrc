@@ -1,5 +1,14 @@
 " Set colors
-colors koehler
+colors slate
+
+" Set font
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ 12
+  elseif has("gui_win32")
+    set guifont=Consolas:h9:cANSI
+  endif
+endif
 
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
@@ -15,6 +24,10 @@ set clipboard=unnamed
 " Mouse and backspace
 set mouse=a  " on OSX press ALT and click
 set backspace=2     " make backspace behave like normal again
+
+" code folding
+set foldmethod=indent
+set foldlevel=99
 
 
 " Rebind <Leader> key
@@ -51,7 +64,7 @@ map <c-h> <c-w>h
 
 
 " easier moving between tabs
-map <Leader>n <esc>:tabprevious<CR>
+"" map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
 
 
@@ -72,11 +85,7 @@ vnoremap > >gv  " better indentation
 "" au InsertLeave * match ExtraWhitespace /\s\+$/
 
 
-" Color scheme
-" mkdir -p ~/.vim/colors && cd ~/.vim/colors
-" wget -O wombat256mod.vim http://www.vim.org/scripts/download_script.php?src_id=13400
-"" set t_Co=256
-"" color wombat256mod
+
 
 
 " Enable syntax highlighting
@@ -131,8 +140,7 @@ set noswapfile
 " mkdir -p ~/.vim/autoload ~/.vim/bundle
 " curl -so ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/HEAD/autoload/pathogen.vim
 " Now you can install any plugin into a .vim/bundle/plugin-name/ folder
-"" call pathogen#infect()
-
+call pathogen#infect()
 
 " ============================================================================
 " Python IDE Setup
@@ -148,10 +156,16 @@ set noswapfile
 " Settings for ctrlp
 " cd ~/.vim/bundle
 " git clone https://github.com/kien/ctrlp.vim.git
-"" let g:ctrlp_max_height = 30
-"" set wildignore+=*.pyc
-"" set wildignore+=*_build/*
-"" set wildignore+=*/coverage/*
+let g:ctrlp_max_height = 30
+let g:ctrlp_working_path_mode = 0
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+" Rope Vim
+let g:ropevim_vim_completion=1
+let g:ropevim_extended_complete=1
+imap <c-space> <C-R>=RopeCodeAssistInsertMode()<CR>
 
 
 " Settings for python-mode
@@ -159,6 +173,7 @@ set noswapfile
 " git clone https://github.com/klen/python-mode
 "" map <Leader>g :call RopeGotoDefinition()<CR>
 "" let ropevim_enable_shortcuts = 1
+"" let g:pymode_folding = 0
 "" let g:pymode_rope_goto_def_newwin = "vnew"
 "" let g:pymode_rope_extended_complete = 1
 "" let g:pymode_breakpoint = 0
